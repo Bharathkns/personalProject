@@ -69,6 +69,34 @@
       background: #adb5bd;
       color: white;
     }
+
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(720deg) scale(0.5);
+      }
+    }
   </style>
 </head>
 
@@ -170,6 +198,7 @@
       yesBtn.style.transform = `scale(${yesSize})`;
 
       yesBtn.onclick = () => {
+        burstHeartConfetti();
         qEl.textContent = "Congrats! 🎉 You got the best bebu 💘";
         imgEl.style.display = "none";
         optEl.innerHTML = "";
@@ -191,6 +220,31 @@
     }
 
     loadQuestion();
+
+    function burstHeartConfetti() {
+      const container = document.createElement("div");
+      container.className = "confetti-container";
+      document.body.appendChild(container);
+
+      const hearts = ["❤️", "💕", "💖", "💗", "💘", "💝", "💓", "💞"];
+      const numHearts = 50;
+
+      for (let i = 0; i < numHearts; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "-50px";
+        heart.style.fontSize = (Math.random() * 20 + 16) + "px";
+        heart.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        heart.style.animationDelay = (Math.random() * 0.5) + "s";
+        container.appendChild(heart);
+      }
+
+      setTimeout(() => {
+        container.remove();
+      }, 5000);
+    }
   </script>
 </body>
 </html>
