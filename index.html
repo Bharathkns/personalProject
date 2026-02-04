@@ -111,6 +111,13 @@
     let current = 0;
     let yesSize = 1;
 
+    const wrongMessages = [
+      "BAD BEBU NO VALENTINES FOR YOU",
+      "YOU KNOW WHAT IS THE RIGHT ANSWER",
+      "SORRY NO CAN DO. CHOOSE ME",
+      "DUMBO"
+    ];
+
     const qEl = document.getElementById("question");
     const imgEl = document.getElementById("qImage");
     const optEl = document.getElementById("options");
@@ -130,10 +137,18 @@
           btn.textContent = opt;
           btn.onclick = () => {
             if (i === q.answer) {
-              current++;
-              loadQuestion();
+              if (current === 3) {
+                msgEl.textContent = "NAATTTTY POTATO";
+                setTimeout(() => {
+                  current++;
+                  loadQuestion();
+                }, 1500);
+              } else {
+                current++;
+                loadQuestion();
+              }
             } else {
-              msgEl.textContent = "YOU DON’T LOVE ME ENOUGH 😭";
+              msgEl.textContent = wrongMessages[current];
             }
           };
           optEl.appendChild(btn);
